@@ -1,0 +1,29 @@
+CREATE TABLE TABLE_TBL (
+    tableID   VARCHAR2(10) PRIMARY KEY,
+    capacity  NUMBER(2)    NOT NULL,
+    location  VARCHAR2(50),
+    status    VARCHAR2(10) CHECK (status IN ('Available','Unavailable'))
+);
+
+
+
+CREATE TABLE RESERVATION_TBL (
+    reservationID     NUMBER(8)    PRIMARY KEY,
+    tableID           VARCHAR2(10),
+    customerName      VARCHAR2(100),
+    partySize         NUMBER(2),
+    reservationDate   DATE,
+    reservationTime   VARCHAR2(10),
+    status             VARCHAR2(10) CHECK (status IN ('ACTIVE','CANCELLED')),
+
+    CONSTRAINT fk_table
+      FOREIGN KEY (tableID)
+      REFERENCES TABLE_TBL(tableID)
+);
+
+INSERT INTO TABLE_TBL VALUES ('TBL01', 4, 'Indoor',  'Available');
+INSERT INTO TABLE_TBL VALUES ('TBL02', 2, 'Window',  'Available');
+INSERT INTO TABLE_TBL VALUES ('TBL03', 6, 'Outdoor', 'Unavailable');
+
+COMMIT;
+
